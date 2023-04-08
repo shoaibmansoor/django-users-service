@@ -1,0 +1,3 @@
+graphql_django_project/venv
+*.pyc
+*.sqlite3

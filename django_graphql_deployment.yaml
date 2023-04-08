@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-graphql-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-graphql-app
+  template:
+    metadata:
+      labels:
+        app: django-graphql-app
+    spec:
+      containers:
+        - name: django-graphql-app
+          image: <your_docker_username>/django-graphql-app:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DJANGO_ALLOWED_HOSTS
+              value: "*"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-graphql-app
+spec:
+  selector:
+    app: django-graphql-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: LoadBalancer
